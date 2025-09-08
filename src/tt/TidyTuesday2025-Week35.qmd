@@ -1,0 +1,54 @@
+---
+title: "Tidy Tuesday 2025 Week 35"
+---
+
+```{r}
+library(tidytuesdayR)
+tuesdata <- tidytuesdayR::tt_load(2025, week=35)
+
+frog <- tuesdata$frogID_data
+names <- tuesdata$frog_names
+
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+unique(frog$stateProvince)
+sum(frog$stateProvince == "New South Wales")
+```
+
+```{r}
+ggplot(frog, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
+  geom_point()
+```
+```{r}
+frog %>%
+  count(scientificName, sort=TRUE)
+```
+
+
+
+```{r}
+frog2 <- frog %>% 
+  group_by(scientificName) %>%
+  mutate(n = n()) %>%
+  ungroup() %>%
+  mutate(rank = dense_rank(desc(n))) %>%
+  filter(rank <= 3)
+```
+
+```{r}
+
+ggplot(frog2, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
+  geom_point() +
+  facet_wrap(~scientificName) +
+  xlim(-50,-15) +
+  ylim(135,155) +
+  labs(title = "Top 3 Most Common Frogs in Australia",
+       x = "Latitude",
+       y = "Longitude",
+       color = "Province")
+```
+
