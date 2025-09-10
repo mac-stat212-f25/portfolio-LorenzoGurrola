@@ -20,6 +20,9 @@ sum(frog$stateProvince == "New South Wales")
 ```
 
 ```{r}
+#I want to ask the research question: Where are the most common frogs located physically? 
+#To start, let's mark graph them via latitude and longitude.
+
 ggplot(frog, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
   geom_point()
 ```
@@ -31,6 +34,8 @@ frog %>%
 
 
 ```{r}
+#let's rank the top 3 most common frogs and add only them to our new dataset
+
 frog2 <- frog %>% 
   group_by(scientificName) %>%
   mutate(n = n()) %>%
@@ -40,6 +45,7 @@ frog2 <- frog %>%
 ```
 
 ```{r}
+#Time for our final plot!
 
 ggplot(frog2, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
   geom_point() +

@@ -1,0 +1,20 @@
+---
+title: "ICA Sept 8"
+---
+
+
+```{r}
+library(tidyverse)
+weather <- read_csv("https://mac-stat.github.io/data/sfo_weather.csv")
+```
+
+```{r}
+library(dplyr)
+ggplot(weather, aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
+  geom_linerange(color="#ECEBE3") +
+  geom_ribbon(aes(ymin=NormalLow, ymax=NormalHigh, fill="#C8B8BA")) +
+  geom_linerange
+  theme_classic()
+  
+```
+
