@@ -10,11 +10,46 @@ weather <- read_csv("https://mac-stat.github.io/data/sfo_weather.csv")
 
 ```{r}
 library(dplyr)
-ggplot(weather, aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
-  geom_linerange(color="#ECEBE3") +
-  geom_ribbon(aes(ymin=NormalLow, ymax=NormalHigh, fill="#C8B8BA")) +
-  geom_linerange
+#ggplot(weather, aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
+#  geom_linerange(color="#ECEBE3") +
+#  geom_ribbon(aes(ymin=NormalLow, ymax=NormalHigh, fill="#C8B8BA")) +
+#  geom_ribbon(aes(ymin=Low, ymax=High, fill="#A90248")) +
+#  theme_classic()
+
+
+ggplot(weather) +
+  geom_linerange(aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=RecordLow,ymax=RecordHigh), fill="#ECEBE3", data=weather) +
+  geom_linerange(aes(x=dateInYear, ymin=NormalLow, ymax=NormalHigh)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=NormalLow,ymax=NormalHigh), fill="#C8B8BA", data=weather) +
+  geom_linerange(aes(x=dateInYear, ymin=Low, ymax=High)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=Low,ymax=High), fill = "#A90248", data=weather) +
   theme_classic()
   
+```
+
+```{r}
+weather$monthName <- factor(month.name[weather$Month], levels=month.name)
+
+days_in_month <- c(31,28,31,30,31,30,31,31,30,31,30,31)
+month_starts <- c(1, cumsum(days_in_month)[-12])
+
+ggplot(weather) +
+  geom_vline(
+    data = subset(weather, Day==1 & Month != 1),
+    aes(xintercept=dateInYear),
+    linetype = "dotted",
+    color = "grey") +
+  geom_linerange(aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=RecordLow,ymax=RecordHigh), fill="#ECEBE3", data=weather) +
+  geom_linerange(aes(x=dateInYear, ymin=NormalLow, ymax=NormalHigh)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=NormalLow,ymax=NormalHigh), fill="#C8B8BA", data=weather) +
+  geom_linerange(aes(x=dateInYear, ymin=Low, ymax=High)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=Low,ymax=High), fill = "#A90248", data=weather) +
+  scale_x_continuous(
+    breaks = month_starts + 15,
+    labels = month.name
+  ) +
+  theme_classic() 
 ```
 

@@ -1,0 +1,137 @@
+---
+title: "ICA Sep 12"
+---
+
+```{r}
+library(tidyverse)
+library(sf) # tools for working with spatial vector data (GIS functionality, mapping)
+library(elevatr) # access to raster elevation maps
+library(terra)
+library(stars)
+library(tidycensus) # spatial data for the US with census information
+library(USAboundaries) # access to boundaries for US states, counties, zip codes, and congressional districts 
+```
+
+```{r}
+nc <- st_read(system.file("shape/nc.shp", package = "sf"))
+mn_cities <- st_read("data/shp_loc_pop_centers/city_and_township_population_centers.shp")
+mn_water <- st_read("data/shp_water_lakes_rivers/LakesAndRivers.shp")
+```
+
+```{r}
+class(nc)
+class(mn_cities)
+class(mn_water)
+```
+
+```{r}
+st_crs(nc)
+```
+
+
+```{r}
+ggplot(nc) +
+    geom_sf() +
+    theme_classic() +
+    labs(title = "NAD27")
+```
+
+
+
+```{r}
+transform_and_plot <- function(spatial_obj, new_crs) {
+    spatial_obj |> 
+        st_transform(crs = new_crs) |> 
+        ggplot() +
+            geom_sf() +
+            theme_classic()
+}
+
+# Example usage of this function (using a South Carolina CRS)
+transform_and_plot(nc, new_crs = "EPSG:5588")
+```
+
+
+```{r}
+mn_counties <- USAboundaries::us_counties(resolution = "high", states = "Minnesota")
+names_counties <- names(mn_counties)
+names(mn_counties)[names_counties == "state_name"] <- c("state_name1", "state_name2")
+```
+
+```{r}
+st_crs(mn_cities)
+```
+
+```{r}
+st_crs(mn_counties)
+```
+
+
+```{r}
+st_crs(mn_water)
+```
+
+```{r}
+st_transform(mn_counties, crs = st_crs(mn_cities))
+st_transform(mn_water, crs = st_crs(mn_cities))
+```
+
+```{r}
+library(ggthemes)
+ggplot() +
+  geom_sf(data = mn_counties) +
+  geom_sf(data = mn_cities, color = "blue", size = 0.7) +
+  theme_classic() + 
+  ggthemes::theme_map()
+```
+
+```{r}
+ggplot() +
+    geom_sf(data = mn_counties, fill = "white") + 
+    geom_sf(data = mn_cities |> filter(Population >= 10000), mapping = aes(color = Population, size = Population)) + # cities layer
+    scale_color_viridis_c() + # continuous (gradient) color scale
+    labs(title = "Minnesota Cities with Population >= 10,000") + 
+    ggthemes::theme_map() +
+    theme(legend.position = "bottom") # move legend
+```
+
+
+```{r}
+elevation <- elevatr::get_elev_raster(mn_counties, z = 5, clip = "bbox")
+```
+
+```{r}
+raster::crs(elevation) <- sf::st_crs(mn_counties)
+```
+
+```{r}
+elev_df <- elevation |> terra::as.data.frame(xy = TRUE)
+```
+
+```{r}
+colnames(elev_df) <- c("x", "y", "elevation")
+```
+
+
+```{r}
+ggplot() +
+  geom_raster(data = elev_df, aes(x=x, y=y, fill=elevation)) +
+  scale_fill_gradient(low = "darkgreen", high = "white", guide = FALSE) +
+  geom_sf(data = mn_counties, fill = NA, color = "black") +
+  geom_sf(data = mn_cities |> filter(Population >= 10000), mapping = aes(color = Population, size = Population))+ # cities layer
+    scale_color_viridis_c() + # continuous (gradient) color scale
+    labs(title = "Minnesota Cities with Population >= 10,000") + 
+    ggthemes::theme_map() +
+    theme(legend.position = "bottom") # move legend
+```
+
+```{r}
+seven_countyarea <- mn_counties |>
+    filter(name %in% c("Anoka", "Hennepin", "Ramsey", "Dakota", "Carver", "Washington", "Scott")) |> 
+    st_bbox()
+```
+
+```{r}
+
+```
+
