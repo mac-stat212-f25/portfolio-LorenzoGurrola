@@ -48,8 +48,29 @@ ggplot(weather) +
   geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=Low,ymax=High), fill = "#A90248", data=weather) +
   scale_x_continuous(
     breaks = month_starts + 15,
-    labels = month.name
-  ) +
-  theme_classic() 
+    labels = month.name) +
+  theme_classic() +
+  theme(axis.text.x = element_text(size = 6))
+```
+
+```{r}
+PrecMonth <- weather %>%
+  group_by(Month) %>%
+  mutate(PrecMonth = sum(Precip)) %>%
+  ungroup()
+
+PrecMonth <- weather$CulmPrec
+
+typeof(month_starts)
+
+weather %>%
+  ggplot(aes(x=dateInYear, y=CulmPrec)) +
+  geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear,ymin=0,ymax=CulmPrec), fill="grey80", data=weather) +
+  geom_line(color="skyblue") +
+  scale_x_continuous(
+    breaks = month_starts[-1],
+    labels = PrecMonth) +
+  theme_classic() +
+  theme_classic()
 ```
 
