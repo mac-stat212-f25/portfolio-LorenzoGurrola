@@ -10,13 +10,6 @@ weather <- read_csv("https://mac-stat.github.io/data/sfo_weather.csv")
 
 ```{r}
 library(dplyr)
-#ggplot(weather, aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
-#  geom_linerange(color="#ECEBE3") +
-#  geom_ribbon(aes(ymin=NormalLow, ymax=NormalHigh, fill="#C8B8BA")) +
-#  geom_ribbon(aes(ymin=Low, ymax=High, fill="#A90248")) +
-#  theme_classic()
-
-
 ggplot(weather) +
   geom_linerange(aes(x=dateInYear, ymin=RecordLow, ymax = RecordHigh)) +
   geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear+1, ymin=RecordLow,ymax=RecordHigh), fill="#ECEBE3", data=weather) +
@@ -56,21 +49,32 @@ ggplot(weather) +
 ```{r}
 PrecMonth <- weather %>%
   group_by(Month) %>%
-  mutate(PrecMonth = sum(Precip)) %>%
-  ungroup()
+  filter(Day == max(Day)) %>%
+  ungroup() %>%
+  select(`Day`, `CulmPrec`)
 
-PrecMonth <- weather$CulmPrec
-
-typeof(month_starts)
+positions <- data.frame(
+  x = month_starts + 30,
+    y = PrecMonth$CulmPrec + 0.1,
+  label = PrecMonth$CulmPrec
+)
 
 weather %>%
   ggplot(aes(x=dateInYear, y=CulmPrec)) +
   geom_rect(aes(xmin=dateInYear-1,xmax=dateInYear,ymin=0,ymax=CulmPrec), fill="grey80", data=weather) +
   geom_line(color="skyblue") +
-  scale_x_continuous(
-    breaks = month_starts[-1],
-    labels = PrecMonth) +
-  theme_classic() +
+  geom_text(
+    data = positions,
+    aes(x = x, y = y, label = label),
+    size = 2.5
+  ) +
+  geom_point(
+    data = weather %>% filter(RecordP == TRUE),
+    aes(x = dateInYear, y = CulmPrec + 0.2),
+    shape = 25,
+    fill = "black",
+    size = 1
+  ) +
   theme_classic()
 ```
 
