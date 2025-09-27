@@ -22,7 +22,7 @@ number-depth: 2
 
 book:
   title: "COMP/STAT212 Portfolio"
-  author: "Your Name Here"
+  author: "Lorenzo Gurrola"
   date: today  # use today to update date published based on last time project was edited
   date-format: full
   # favicon: path/to/favorite-logo.png
@@ -45,7 +45,7 @@ book:
       # footer text
 
   sidebar:
-    title: "Your Name Here"
+    title: "Lorenzo Gurrola"
     logo: assets/sidebar-logo.png
     logo-alt: "Random negative space illustration"
     collapse-level: 2
@@ -71,8 +71,10 @@ book:
 
     - part: "In-Class Activities"
       chapters:
-      - src/ica/ica-sample1.qmd
-      - src/ica/ica-sample2.qmd
+      - src/ica/adv-data-viz.qmd
+      - src/ica/04/adv-maps/adv-spatial-viz-p1.qmd
+      - src/ica/06-wrangling-1-notes.qmd
+      - src/ica/07-wrangling-2-notes.qmd
 
   appendices:
   - src/appx/appx-sample1.qmd
