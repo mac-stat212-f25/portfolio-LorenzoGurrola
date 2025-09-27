@@ -66,13 +66,12 @@ book:
 
     - part: "TidyTuesday"
       chapters:
-      - src/tt/2025-07-08.qmd
-      - src/tt/2025-07-15.qmd
+      - src/tt/TidyTuesday2025-Week35.qmd
 
     - part: "In-Class Activities"
       chapters:
       - src/ica/adv-data-viz.qmd
-      - src/ica/04/adv-maps/adv-spatial-viz-p1.qmd
+      - src/ica/04-adv-maps/adv-spatial-viz-p1.qmd
       - src/ica/06-wrangling-1-notes.qmd
       - src/ica/07-wrangling-2-notes.qmd
 
