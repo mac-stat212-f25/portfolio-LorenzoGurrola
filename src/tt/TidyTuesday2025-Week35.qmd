@@ -1,0 +1,60 @@
+---
+title: "Tidy Tuesday 2025 Week 35"
+---
+
+```{r}
+library(tidytuesdayR)
+tuesdata <- tidytuesdayR::tt_load(2025, week=35)
+
+frog <- tuesdata$frogID_data
+names <- tuesdata$frog_names
+
+
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+unique(frog$stateProvince)
+sum(frog$stateProvince == "New South Wales")
+```
+
+```{r}
+#I want to ask the research question: Where are the most common frogs located physically? 
+#To start, let's mark graph them via latitude and longitude.
+
+ggplot(frog, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
+  geom_point()
+```
+```{r}
+frog %>%
+  count(scientificName, sort=TRUE)
+```
+
+
+
+```{r}
+#let's rank the top 3 most common frogs and add only them to our new dataset
+
+frog2 <- frog %>% 
+  group_by(scientificName) %>%
+  mutate(n = n()) %>%
+  ungroup() %>%
+  mutate(rank = dense_rank(desc(n))) %>%
+  filter(rank <= 3)
+```
+
+```{r}
+#Time for our final plot!
+
+ggplot(frog2, aes(x=decimalLatitude, y=decimalLongitude, color=stateProvince)) +
+  geom_point() +
+  facet_wrap(~scientificName) +
+  xlim(-50,-15) +
+  ylim(135,155) +
+  labs(title = "Top 3 Most Common Frogs in Australia",
+       x = "Latitude",
+       y = "Longitude",
+       color = "Province")
+```
+
