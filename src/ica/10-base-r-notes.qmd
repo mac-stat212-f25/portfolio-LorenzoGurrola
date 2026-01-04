@@ -20,6 +20,7 @@ By the end of this lesson, you should be able to:
 
 
 ```{r}
+library(tidyverse)
 num_vec <- vector("numeric", length = 2) #empty vector: Zeros
 num_vec
 class(num_vec)

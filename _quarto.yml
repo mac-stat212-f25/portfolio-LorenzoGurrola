@@ -74,6 +74,9 @@ book:
       - src/ica/04-adv-maps/adv-spatial-viz-p1.qmd
       - src/ica/06-wrangling-1-notes.qmd
       - src/ica/07-wrangling-2-notes.qmd
+      - src/ica/09-functions-notes.qmd
+      - src/ica/10-base-r-notes.qmd
+      - src/ica/16-databases-notes.qmd
 
   appendices:
   - src/appx/appx-sample1.qmd
