@@ -9,12 +9,14 @@ country_lists <- readr::read_csv('https://raw.githubusercontent.com/rfordatascie
 rank_by_year <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-09-09/rank_by_year.csv')
 ```
 ```{r}
+#data exploration on missingness
 colSums(is.na(rank_by_year))
 ```
 
 
 
 ```{r}
+#cleaning data and summarizing it
 rank_by_year_clean <- rank_by_year %>%
   filter(year==2025) %>%
   group_by(region) %>%
@@ -29,6 +31,7 @@ Each country in the world has a list of other countries that are allowed to ente
 
 
 ```{r, fig.width=9, fig.height=6}
+#final visualization
 ggplot(rank_by_year_clean, aes(x=region, y=visa, fill=region)) +
   geom_col() +
   scale_fill_manual(values = c(
@@ -40,7 +43,7 @@ ggplot(rank_by_year_clean, aes(x=region, y=visa, fill=region)) +
   "#F46D43",
   "#D73027"
   )) +
-  labs(title = "Regions Ranked by Simple Departure Policy",
+  labs(title = "Regions Ranked by Simple Departure Policy for 2025",
        subtitle = "Based on average number of free or simple visa policies within country, higher values mean an easier time leaving the country",
        caption = "Source: https://github.com/rfordatascience/tidytuesday/blob/main/data/2025/2025-09-09/readme.md \nNo NA values in data",
        x = "",

@@ -68,6 +68,7 @@ book:
       chapters:
       - src/tt/TidyTuesday2025-Week35.qmd
       - src/tt/TidyTuesday2025-Week36.qmd
+      - src/tt/TidyTuesday2025-Week37.qmd
 
     - part: "In-Class Activities"
       chapters:

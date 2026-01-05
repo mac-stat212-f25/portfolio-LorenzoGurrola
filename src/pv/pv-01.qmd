@@ -9,14 +9,14 @@ library(ggplot2)
 
 
 ```{r}
+#Exploratory data analysis
 dim(penguins)
-```
-
-```{r}
 unique(penguins$island)
 ```
 
+
 ```{r}
+#Cleaning data and refactoring it
 penguins_clean <- penguins[complete.cases(penguins), ]
 
 
@@ -29,6 +29,7 @@ penguins_clean$sex <- factor(penguins_clean$sex, levels = c("Male", "Female"))
 
 
 ```{r, fig.width = 8, fig.height = 6}
+#Final visualization
 ggplot(penguins_clean, aes(x=bill_len, y=bill_dep, color=species, shape=sex)) +
   geom_point(alpha = 0.8, size = 3) +
   scale_color_manual(values = c(
@@ -47,9 +48,6 @@ ggplot(penguins_clean, aes(x=bill_len, y=bill_dep, color=species, shape=sex)) +
   theme_bw() +
   theme(
     legend.position = "top",
-    #legend.direction = "vertical",
-    #panel.grid.minor = element_blank(),
-    #strip.text = element_text(face = "bold"),
     plot.title = element_text(face = "bold", size = 16),
     plot.subtitle = element_text(size = 10),
     axis.title = element_text(face = "bold", size = 11),
