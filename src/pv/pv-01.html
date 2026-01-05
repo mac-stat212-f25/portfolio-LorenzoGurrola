@@ -196,6 +196,11 @@ cookieconsent.run({
   <a href="../../src/tt/TidyTuesday2025-Week36.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">TidyTuesday2025-Week36</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../src/tt/TidyTuesday2025-Week37.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">TidyTuesday2025-Week37</span></a>
+  </div>
+</li>
       </ul>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -299,12 +304,11 @@ cookieconsent.run({
 </details>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="fu">dim</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb2"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co">#Exploratory data analysis</span></span>
+<span id="cb2-2"><a href="#cb2-2"></a><span class="fu">dim</span>(penguins)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] 344   8</code></pre>
 </div>
-</div>
-<div class="cell">
 <details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>island)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output cell-output-stdout">
 <pre><code>[1] Torgersen Biscoe    Dream    
@@ -312,46 +316,45 @@ Levels: Biscoe Dream Torgersen</code></pre>
 </div>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a>penguins_clean <span class="ot">&lt;-</span> penguins[<span class="fu">complete.cases</span>(penguins), ]</span>
-<span id="cb6-2"><a href="#cb6-2"></a></span>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">#Cleaning data and refactoring it</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a>penguins_clean <span class="ot">&lt;-</span> penguins[<span class="fu">complete.cases</span>(penguins), ]</span>
 <span id="cb6-3"><a href="#cb6-3"></a></span>
-<span id="cb6-4"><a href="#cb6-4"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
-<span id="cb6-5"><a href="#cb6-5"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"Male"</span>,</span>
-<span id="cb6-6"><a href="#cb6-6"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"Female"</span></span>
-<span id="cb6-7"><a href="#cb6-7"></a>)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(penguins_clean<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-4"><a href="#cb6-4"></a></span>
+<span id="cb6-5"><a href="#cb6-5"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"Male"</span>,</span>
+<span id="cb6-7"><a href="#cb6-7"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"Female"</span></span>
+<span id="cb6-8"><a href="#cb6-8"></a>)</span>
+<span id="cb6-9"><a href="#cb6-9"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(penguins_clean<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell">
-<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="fu">ggplot</span>(penguins_clean, <span class="fu">aes</span>(<span class="at">x=</span>bill_len, <span class="at">y=</span>bill_dep, <span class="at">color=</span>species, <span class="at">shape=</span>sex)) <span class="sc">+</span></span>
-<span id="cb7-2"><a href="#cb7-2"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="st">"#E69F00"</span>,</span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="st">"#56B4E9"</span>,</span>
-<span id="cb7-6"><a href="#cb7-6"></a>  <span class="st">"#009E73"</span></span>
-<span id="cb7-7"><a href="#cb7-7"></a>  )) <span class="sc">+</span></span>
-<span id="cb7-8"><a href="#cb7-8"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
-<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Adelie Penguins have the Shortest Bills and are found on </span><span class="sc">\n</span><span class="st">Three Islands in the Palmer Archipelago"</span>,</span>
-<span id="cb7-10"><a href="#cb7-10"></a>       <span class="at">subtitle =</span> <span class="st">"Facet wrapped by island; shape corresponds to sex of penguin; color corresponds to species; </span><span class="sc">\n</span><span class="st">(accessible pallete used for color-blindness)"</span>,</span>
-<span id="cb7-11"><a href="#cb7-11"></a>       <span class="at">caption =</span> <span class="st">"Source: https://allisonhorst.github.io/palmerpenguins/ </span><span class="sc">\n</span><span class="st">All NA values dropped"</span>,</span>
-<span id="cb7-12"><a href="#cb7-12"></a>       <span class="at">x =</span> <span class="st">"Bill Length (mm)"</span>,</span>
-<span id="cb7-13"><a href="#cb7-13"></a>       <span class="at">y =</span> <span class="st">"Bill Depth (mm)"</span>,</span>
-<span id="cb7-14"><a href="#cb7-14"></a>       <span class="at">color =</span> <span class="st">"Penguin Species"</span>,</span>
-<span id="cb7-15"><a href="#cb7-15"></a>       <span class="at">shape =</span> <span class="st">"Sex"</span>)<span class="sc">+</span></span>
-<span id="cb7-16"><a href="#cb7-16"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
-<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">theme</span>(</span>
-<span id="cb7-18"><a href="#cb7-18"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
-<span id="cb7-19"><a href="#cb7-19"></a>    <span class="co">#legend.direction = "vertical",</span></span>
-<span id="cb7-20"><a href="#cb7-20"></a>    <span class="co">#panel.grid.minor = element_blank(),</span></span>
-<span id="cb7-21"><a href="#cb7-21"></a>    <span class="co">#strip.text = element_text(face = "bold"),</span></span>
-<span id="cb7-22"><a href="#cb7-22"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
-<span id="cb7-23"><a href="#cb7-23"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
-<span id="cb7-24"><a href="#cb7-24"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
-<span id="cb7-25"><a href="#cb7-25"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"gray40"</span>)</span>
-<span id="cb7-26"><a href="#cb7-26"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<details class="code-fold"><summary>Code</summary><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode numberSource r number-lines code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="co">#Final visualization</span></span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="fu">ggplot</span>(penguins_clean, <span class="fu">aes</span>(<span class="at">x=</span>bill_len, <span class="at">y=</span>bill_dep, <span class="at">color=</span>species, <span class="at">shape=</span>sex)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">size =</span> <span class="dv">3</span>) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(</span>
+<span id="cb7-5"><a href="#cb7-5"></a>  <span class="st">"#E69F00"</span>,</span>
+<span id="cb7-6"><a href="#cb7-6"></a>  <span class="st">"#56B4E9"</span>,</span>
+<span id="cb7-7"><a href="#cb7-7"></a>  <span class="st">"#009E73"</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  )) <span class="sc">+</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>island) <span class="sc">+</span></span>
+<span id="cb7-10"><a href="#cb7-10"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Adelie Penguins have the Shortest Bills and are found on </span><span class="sc">\n</span><span class="st">Three Islands in the Palmer Archipelago"</span>,</span>
+<span id="cb7-11"><a href="#cb7-11"></a>       <span class="at">subtitle =</span> <span class="st">"Facet wrapped by island; shape corresponds to sex of penguin; color corresponds to species; </span><span class="sc">\n</span><span class="st">(accessible pallete used for color-blindness)"</span>,</span>
+<span id="cb7-12"><a href="#cb7-12"></a>       <span class="at">caption =</span> <span class="st">"Source: https://allisonhorst.github.io/palmerpenguins/ </span><span class="sc">\n</span><span class="st">All NA values dropped"</span>,</span>
+<span id="cb7-13"><a href="#cb7-13"></a>       <span class="at">x =</span> <span class="st">"Bill Length (mm)"</span>,</span>
+<span id="cb7-14"><a href="#cb7-14"></a>       <span class="at">y =</span> <span class="st">"Bill Depth (mm)"</span>,</span>
+<span id="cb7-15"><a href="#cb7-15"></a>       <span class="at">color =</span> <span class="st">"Penguin Species"</span>,</span>
+<span id="cb7-16"><a href="#cb7-16"></a>       <span class="at">shape =</span> <span class="st">"Sex"</span>)<span class="sc">+</span></span>
+<span id="cb7-17"><a href="#cb7-17"></a>  <span class="fu">theme_bw</span>() <span class="sc">+</span></span>
+<span id="cb7-18"><a href="#cb7-18"></a>  <span class="fu">theme</span>(</span>
+<span id="cb7-19"><a href="#cb7-19"></a>    <span class="at">legend.position =</span> <span class="st">"top"</span>,</span>
+<span id="cb7-20"><a href="#cb7-20"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">16</span>),</span>
+<span id="cb7-21"><a href="#cb7-21"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),</span>
+<span id="cb7-22"><a href="#cb7-22"></a>    <span class="at">axis.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">11</span>),</span>
+<span id="cb7-23"><a href="#cb7-23"></a>    <span class="at">plot.caption =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"gray40"</span>)</span>
+<span id="cb7-24"><a href="#cb7-24"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details><div class="cell-output-display">
 <div>
-<figure class="figure"><p><img src="pv-01_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid figure-img" width="768"></p>
+<figure class="figure"><p><img src="pv-01_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid figure-img" width="768"></p>
 </figure>
 </div>
 </div>
@@ -1002,54 +1005,52 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb8-11"><a href="#cb8-11"></a></span>
 <span id="cb8-12"><a href="#cb8-12"></a></span>
 <span id="cb8-15"><a href="#cb8-15"></a><span class="in">```{r}</span></span>
-<span id="cb8-16"><a href="#cb8-16"></a><span class="fu">dim</span>(penguins)</span>
-<span id="cb8-17"><a href="#cb8-17"></a><span class="in">```</span></span>
-<span id="cb8-18"><a href="#cb8-18"></a></span>
-<span id="cb8-21"><a href="#cb8-21"></a><span class="in">```{r}</span></span>
-<span id="cb8-22"><a href="#cb8-22"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>island)</span>
-<span id="cb8-23"><a href="#cb8-23"></a><span class="in">```</span></span>
-<span id="cb8-24"><a href="#cb8-24"></a></span>
-<span id="cb8-27"><a href="#cb8-27"></a><span class="in">```{r}</span></span>
-<span id="cb8-28"><a href="#cb8-28"></a>penguins_clean <span class="ot">&lt;-</span> penguins[<span class="fu">complete.cases</span>(penguins), ]</span>
-<span id="cb8-29"><a href="#cb8-29"></a></span>
-<span id="cb8-30"><a href="#cb8-30"></a></span>
-<span id="cb8-31"><a href="#cb8-31"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
-<span id="cb8-32"><a href="#cb8-32"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"Male"</span>,</span>
-<span id="cb8-33"><a href="#cb8-33"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"Female"</span></span>
-<span id="cb8-34"><a href="#cb8-34"></a>)</span>
-<span id="cb8-35"><a href="#cb8-35"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(penguins_clean<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
-<span id="cb8-36"><a href="#cb8-36"></a><span class="in">```</span></span>
-<span id="cb8-37"><a href="#cb8-37"></a></span>
-<span id="cb8-38"><a href="#cb8-38"></a></span>
-<span id="cb8-39"><a href="#cb8-39"></a><span class="in">```{r, fig.width = 8, fig.height = 6}</span></span>
-<span id="cb8-40"><a href="#cb8-40"></a><span class="in">ggplot(penguins_clean, aes(x=bill_len, y=bill_dep, color=species, shape=sex)) +</span></span>
-<span id="cb8-41"><a href="#cb8-41"></a><span class="in">  geom_point(alpha = 0.8, size = 3) +</span></span>
-<span id="cb8-42"><a href="#cb8-42"></a><span class="in">  scale_color_manual(values = c(</span></span>
-<span id="cb8-43"><a href="#cb8-43"></a><span class="in">  "#E69F00",</span></span>
-<span id="cb8-44"><a href="#cb8-44"></a><span class="in">  "#56B4E9",</span></span>
-<span id="cb8-45"><a href="#cb8-45"></a><span class="in">  "#009E73"</span></span>
-<span id="cb8-46"><a href="#cb8-46"></a><span class="in">  )) +</span></span>
-<span id="cb8-47"><a href="#cb8-47"></a><span class="in">  facet_wrap(~island) +</span></span>
-<span id="cb8-48"><a href="#cb8-48"></a><span class="in">  labs(title = "Adelie Penguins have the Shortest Bills and are found on \nThree Islands in the Palmer Archipelago",</span></span>
-<span id="cb8-49"><a href="#cb8-49"></a><span class="in">       subtitle = "Facet wrapped by island; shape corresponds to sex of penguin; color corresponds to species; \n(accessible pallete used for color-blindness)",</span></span>
-<span id="cb8-50"><a href="#cb8-50"></a><span class="in">       caption = "Source: https://allisonhorst.github.io/palmerpenguins/ \nAll NA values dropped",</span></span>
-<span id="cb8-51"><a href="#cb8-51"></a><span class="in">       x = "Bill Length (mm)",</span></span>
-<span id="cb8-52"><a href="#cb8-52"></a><span class="in">       y = "Bill Depth (mm)",</span></span>
-<span id="cb8-53"><a href="#cb8-53"></a><span class="in">       color = "Penguin Species",</span></span>
-<span id="cb8-54"><a href="#cb8-54"></a><span class="in">       shape = "Sex")+</span></span>
-<span id="cb8-55"><a href="#cb8-55"></a><span class="in">  theme_bw() +</span></span>
-<span id="cb8-56"><a href="#cb8-56"></a><span class="in">  theme(</span></span>
-<span id="cb8-57"><a href="#cb8-57"></a><span class="in">    legend.position = "top",</span></span>
-<span id="cb8-58"><a href="#cb8-58"></a><span class="in">    #legend.direction = "vertical",</span></span>
-<span id="cb8-59"><a href="#cb8-59"></a><span class="in">    #panel.grid.minor = element_blank(),</span></span>
-<span id="cb8-60"><a href="#cb8-60"></a><span class="in">    #strip.text = element_text(face = "bold"),</span></span>
-<span id="cb8-61"><a href="#cb8-61"></a><span class="in">    plot.title = element_text(face = "bold", size = 16),</span></span>
-<span id="cb8-62"><a href="#cb8-62"></a><span class="in">    plot.subtitle = element_text(size = 10),</span></span>
-<span id="cb8-63"><a href="#cb8-63"></a><span class="in">    axis.title = element_text(face = "bold", size = 11),</span></span>
-<span id="cb8-64"><a href="#cb8-64"></a><span class="in">    plot.caption = element_text(color = "gray40")</span></span>
-<span id="cb8-65"><a href="#cb8-65"></a><span class="in">  )</span></span>
-<span id="cb8-66"><a href="#cb8-66"></a><span class="in">```</span></span>
-<span id="cb8-67"><a href="#cb8-67"></a></span>
+<span id="cb8-16"><a href="#cb8-16"></a><span class="co">#Exploratory data analysis</span></span>
+<span id="cb8-17"><a href="#cb8-17"></a><span class="fu">dim</span>(penguins)</span>
+<span id="cb8-18"><a href="#cb8-18"></a><span class="fu">unique</span>(penguins<span class="sc">$</span>island)</span>
+<span id="cb8-19"><a href="#cb8-19"></a><span class="in">```</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a></span>
+<span id="cb8-24"><a href="#cb8-24"></a><span class="in">```{r}</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a><span class="co">#Cleaning data and refactoring it</span></span>
+<span id="cb8-26"><a href="#cb8-26"></a>penguins_clean <span class="ot">&lt;-</span> penguins[<span class="fu">complete.cases</span>(penguins), ]</span>
+<span id="cb8-27"><a href="#cb8-27"></a></span>
+<span id="cb8-28"><a href="#cb8-28"></a></span>
+<span id="cb8-29"><a href="#cb8-29"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">case_when</span>(</span>
+<span id="cb8-30"><a href="#cb8-30"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"male"</span> <span class="sc">~</span> <span class="st">"Male"</span>,</span>
+<span id="cb8-31"><a href="#cb8-31"></a>  penguins_clean<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">"female"</span> <span class="sc">~</span> <span class="st">"Female"</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a>)</span>
+<span id="cb8-33"><a href="#cb8-33"></a>penguins_clean<span class="sc">$</span>sex <span class="ot">&lt;-</span> <span class="fu">factor</span>(penguins_clean<span class="sc">$</span>sex, <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Male"</span>, <span class="st">"Female"</span>))</span>
+<span id="cb8-34"><a href="#cb8-34"></a><span class="in">```</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a></span>
+<span id="cb8-36"><a href="#cb8-36"></a></span>
+<span id="cb8-37"><a href="#cb8-37"></a><span class="in">```{r, fig.width = 8, fig.height = 6}</span></span>
+<span id="cb8-38"><a href="#cb8-38"></a><span class="in">#Final visualization</span></span>
+<span id="cb8-39"><a href="#cb8-39"></a><span class="in">ggplot(penguins_clean, aes(x=bill_len, y=bill_dep, color=species, shape=sex)) +</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a><span class="in">  geom_point(alpha = 0.8, size = 3) +</span></span>
+<span id="cb8-41"><a href="#cb8-41"></a><span class="in">  scale_color_manual(values = c(</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a><span class="in">  "#E69F00",</span></span>
+<span id="cb8-43"><a href="#cb8-43"></a><span class="in">  "#56B4E9",</span></span>
+<span id="cb8-44"><a href="#cb8-44"></a><span class="in">  "#009E73"</span></span>
+<span id="cb8-45"><a href="#cb8-45"></a><span class="in">  )) +</span></span>
+<span id="cb8-46"><a href="#cb8-46"></a><span class="in">  facet_wrap(~island) +</span></span>
+<span id="cb8-47"><a href="#cb8-47"></a><span class="in">  labs(title = "Adelie Penguins have the Shortest Bills and are found on \nThree Islands in the Palmer Archipelago",</span></span>
+<span id="cb8-48"><a href="#cb8-48"></a><span class="in">       subtitle = "Facet wrapped by island; shape corresponds to sex of penguin; color corresponds to species; \n(accessible pallete used for color-blindness)",</span></span>
+<span id="cb8-49"><a href="#cb8-49"></a><span class="in">       caption = "Source: https://allisonhorst.github.io/palmerpenguins/ \nAll NA values dropped",</span></span>
+<span id="cb8-50"><a href="#cb8-50"></a><span class="in">       x = "Bill Length (mm)",</span></span>
+<span id="cb8-51"><a href="#cb8-51"></a><span class="in">       y = "Bill Depth (mm)",</span></span>
+<span id="cb8-52"><a href="#cb8-52"></a><span class="in">       color = "Penguin Species",</span></span>
+<span id="cb8-53"><a href="#cb8-53"></a><span class="in">       shape = "Sex")+</span></span>
+<span id="cb8-54"><a href="#cb8-54"></a><span class="in">  theme_bw() +</span></span>
+<span id="cb8-55"><a href="#cb8-55"></a><span class="in">  theme(</span></span>
+<span id="cb8-56"><a href="#cb8-56"></a><span class="in">    legend.position = "top",</span></span>
+<span id="cb8-57"><a href="#cb8-57"></a><span class="in">    plot.title = element_text(face = "bold", size = 16),</span></span>
+<span id="cb8-58"><a href="#cb8-58"></a><span class="in">    plot.subtitle = element_text(size = 10),</span></span>
+<span id="cb8-59"><a href="#cb8-59"></a><span class="in">    axis.title = element_text(face = "bold", size = 11),</span></span>
+<span id="cb8-60"><a href="#cb8-60"></a><span class="in">    plot.caption = element_text(color = "gray40")</span></span>
+<span id="cb8-61"><a href="#cb8-61"></a><span class="in">  )</span></span>
+<span id="cb8-62"><a href="#cb8-62"></a><span class="in">```</span></span>
+<span id="cb8-63"><a href="#cb8-63"></a></span>
 </code><button title="Copy to Clipboard" class="code-copy-button" data-in-quarto-modal=""><i class="bi"></i></button></pre></div>
 </div></div></div></div></div>
 </div> <!-- /content -->
